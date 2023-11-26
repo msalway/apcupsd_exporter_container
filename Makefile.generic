@@ -1,0 +1,10 @@
+all: build release
+
+.PHONY: build
+build:
+	podman build ${BUILDARGS} -t $(NAME):$(TAG) .
+	podman tag $(NAME):$(TAG) $(NAME):latest
+
+.PHONY: release
+release:
+	podman push $(NAME):$(TAG) docker://$(CONTAINER_REGISTRY)/$(NAME):$(TAG)
